@@ -143,12 +143,26 @@ function moveRoad() {
   return { width: previousWidth, left: previousOffsetLeft };
 }
 
+function moveOtherCars() {
+  let tempOtherCars = document.querySelectorAll(".other-car");
+  for (let i = 0; i < tempOtherCars.length; i++) {
+    let y = tempOtherCars[i].offsetTop - tempOtherCars[i].speed + player.speed;
+    if (y > 2000 || y < -2000) {
+      // reset car
+      createOtherCar(tempOtherCars[i]);
+    } else {
+      tempOtherCars[i].style.top = y + "px";
+    }
+  }
+}
+
 function playGame() {
   if (gamePlay) {
     updateDash();
 
     //movement
     let roadParams = moveRoad();
+    moveOtherCars();
 
     if (keys.ArrowUp) {
       if (player.element.y > 400) player.element.y -= 1;
