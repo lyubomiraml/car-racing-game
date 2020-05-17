@@ -35,8 +35,21 @@ function startGame() {
     speed: 1,
     lives: 3,
     gameScore: 0,
-    carstoPass: 10,
+    carsToPass: 10,
+    score: 0,
+    roadWidth: 250,
   };
+  startBoard();
+}
+
+function startBoard() {
+  for (let x = 0; x < 13; x++) {
+    let div = document.createElement("div");
+    div.setAttribute("class", "road");
+    div.style.top = x * 50 + "px";
+    div.style.width = player.roadWidth + "px";
+    container.appendChild(div);
+  }
 }
 
 function pressKeyOn() {}
@@ -45,7 +58,7 @@ function pressKeyOff() {}
 
 function updateDash() {
   console.log(player);
-  scoreDash.innerHTML = player.gameScore;
+  scoreDash.innerHTML = player.score;
   lifeDash.innerHTML = player.lives;
   speedDash.innerHTML = player.speed;
 }

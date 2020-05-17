@@ -35,8 +35,19 @@ body {
   left: 200px;
   text-align: center;
   color: white;
-  background-color: gray;
+  background-color: rgb(66, 66, 66);
   border-radius: 2px;
+}
+
+.road:before {
+  content: "|";
+  vertical-align: top;
+  color: white;
+  width: 1px;
+  height: 10px;
+  line-height: 30px;
+  left: 50%;
+  position: absolute;
 }
 
 .player-car {
