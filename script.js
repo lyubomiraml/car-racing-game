@@ -21,7 +21,6 @@ let keys = {
 };
 
 function startGame() {
-  console.log(gamePlay);
   btnStart.style.display = "none";
   var div = document.createElement("div");
   div.setAttribute("class", "player-car");
@@ -55,37 +54,32 @@ function startBoard() {
 
 function pressKeyOn(event) {
   event.preventDefault();
-  //  console.log(keys);
   keys[event.key] = true;
 }
 
 function pressKeyOff(event) {
   event.preventDefault();
-  // console.log(keys);
   keys[event.key] = false;
 }
 
 function updateDash() {
-  //console.log(player);
   scoreDash.innerHTML = player.score;
   lifeDash.innerHTML = player.lives;
   speedDash.innerHTML = Math.round(player.speed * 13);
 }
 function moveRoad() {
   let tempRoad = document.querySelectorAll(".road");
-  console.log(tempRoad);
-  let previousRoad = tempRoad[0].offsetLeft;
-  let previousWidth = tempRoad[0].width;
+  let previousOffsetLeft = tempRoad[0].offsetLeft;
+  let previousWidth = tempRoad[0].offsetWidth;
 
   const pSpeed = player.speed;
 
   for (let x = 0; x < tempRoad.length; x++) {
     let num = tempRoad[x].offsetTop + pSpeed;
-    console.log(tempRoad[x].offsetTop);
     if (num > 600) {
       num = num - 650;
 
-      let mover = previousRoad + (Math.floor(Math.random() * 6) - 3);
+      let mover = previousOffsetLeft + (Math.floor(Math.random() * 6) - 3);
       let roadWidth = Math.floor(Math.random() * 11) - 5 + previousWidth;
 
       if (roadWidth < 200) roadWidth = 200;
@@ -96,12 +90,13 @@ function moveRoad() {
       tempRoad[x].style.left = mover + "px";
       tempRoad[x].style.width = roadWidth + "px";
 
-      previousRoad = tempRoad[x].offsetLeft;
-      previousWidth = tempRoad[x].width;
+      previousOffsetLeft = tempRoad[x].offsetLeft;
+      previousWidth = tempRoad[x].offsetWidth;
     }
 
     tempRoad[x].style.top = num + "px";
   }
+  return { width: previousWidth, left: previousOffsetLeft };
 }
 
 function playGame() {
@@ -109,7 +104,7 @@ function playGame() {
     updateDash();
 
     //movement
-    moveRoad();
+    let roadParams = moveRoad();
 
     if (keys.ArrowUp) {
       if (player.element.y > 400) player.element.y -= 1;
@@ -124,6 +119,15 @@ function playGame() {
     }
     if (keys.ArrowRight) {
       player.element.x += player.speed / 4;
+    }
+    //check if on road
+    if (
+      player.element.x + 40 < roadParams.left ||
+      player.element.x > roadParams.left + roadParams.width
+    ) {
+      if (player.element.y < 500) player.element.y += 1;
+      player.speed = player.speed > 0 ? player.speed - 0.2 : 1;
+      console.log("OFF road");
     }
 
     //move car
