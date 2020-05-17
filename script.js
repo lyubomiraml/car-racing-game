@@ -40,6 +40,7 @@ function startGame() {
     roadWidth: 250,
   };
   startBoard();
+  setupOtherCars(10);
 }
 
 function startBoard() {
@@ -50,6 +51,49 @@ function startBoard() {
     div.style.width = player.roadWidth + "px";
     container.appendChild(div);
   }
+}
+
+function setupOtherCars(count) {
+  for (let x = 0; x < count; x++) {
+    let temp = "other-car" + (x + 1);
+    let div = document.createElement("div");
+    div.innerHTML = x + 1;
+    div.setAttribute("class", "other-car");
+    div.setAttribute("id", temp);
+
+    createOtherCar(div);
+    container.appendChild(div);
+  }
+}
+
+function createOtherCar(element) {
+  let tempRoad = document.querySelector(".road");
+  element.style.left =
+    tempRoad.offsetLeft +
+    Math.ceil(Math.random() * tempRoad.offsetWidth) -
+    30 +
+    "px";
+
+  element.style.top = Math.ceil(Math.random() * -400) + "px";
+  setOtherCarBackgroundImage(element);
+
+  element.speed = Math.ceil(Math.random() * 17) + 2;
+}
+
+function setOtherCarBackgroundImage(element) {
+  const otherCarsImages = [
+    "blue-car.png",
+    "red-car.png",
+    "yellow-car.png",
+    "purple-car.png",
+    "orange-car.png",
+    "green-car.png",
+    "cyan-car.png",
+  ];
+
+  element.style.backgroundImage = `url('${
+    otherCarsImages[Math.floor(Math.random() * Math.floor(7))]
+  }')`;
 }
 
 function pressKeyOn(event) {

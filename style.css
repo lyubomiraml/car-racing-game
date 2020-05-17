@@ -58,6 +58,18 @@ body {
   position: absolute;
 }
 
+.other-car {
+  position: absolute;
+  height: 80px;
+  width: 40px;
+  top: 0px;
+  left: 250px;
+  border-radius: 5px;
+  background-size: cover;
+  z-index: 99;
+  text-align: center;
+}
+
 .player-car {
   position: absolute;
   height: 80px;
@@ -67,5 +79,5 @@ body {
   border-radius: 5px;
   background-image: url(red-car.png);
   background-size: cover;
-  z-index: 1000;
+  z-index: 100;
 }
