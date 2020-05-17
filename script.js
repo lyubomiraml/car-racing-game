@@ -55,13 +55,13 @@ function startBoard() {
 
 function pressKeyOn(event) {
   event.preventDefault();
-  console.log(keys);
+  //  console.log(keys);
   keys[event.key] = true;
 }
 
 function pressKeyOff(event) {
   event.preventDefault();
-  console.log(keys);
+  // console.log(keys);
   keys[event.key] = false;
 }
 
@@ -71,12 +71,29 @@ function updateDash() {
   lifeDash.innerHTML = player.lives;
   speedDash.innerHTML = Math.round(player.speed * 13);
 }
+function moveRoad() {
+  let tempRoad = document.querySelectorAll(".road");
+  console.log(tempRoad);
+  let previousRoad = tempRoad[0].offsetLeft;
+
+  for (let x = 0; x < tempRoad.length; x++) {
+    let num = tempRoad[x].offsetTop + player.speed;
+    console.log(tempRoad[x].offsetTop);
+    if (num > 600) {
+      num = num - 650;
+    }
+
+    tempRoad[x].style.top = num + "px";
+  }
+}
 
 function playGame() {
   if (gamePlay) {
     updateDash();
 
     //movement
+    moveRoad();
+
     if (keys.ArrowUp) {
       if (player.element.y > 400) player.element.y -= 1;
       player.speed = player.speed < 20 ? player.speed + 0.05 : 20;
