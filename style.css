@@ -27,6 +27,14 @@ body {
   padding: 5px;
 }
 
+.dashboard {
+  background-color: black;
+  color: white;
+  font-size: 1.5em;
+  text-align: center;
+  padding: 15px;
+}
+
 .road {
   position: absolute;
   height: 50px;

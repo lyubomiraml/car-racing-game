@@ -69,7 +69,7 @@ function updateDash() {
   //console.log(player);
   scoreDash.innerHTML = player.score;
   lifeDash.innerHTML = player.lives;
-  speedDash.innerHTML = player.speed;
+  speedDash.innerHTML = Math.round(player.speed * 13);
 }
 
 function playGame() {
@@ -78,11 +78,11 @@ function playGame() {
 
     //movement
     if (keys.ArrowUp) {
-      player.element.y -= 1;
+      if (player.element.y > 400) player.element.y -= 1;
       player.speed = player.speed < 20 ? player.speed + 0.05 : 20;
     }
     if (keys.ArrowDown) {
-      player.element.y += 1;
+      if (player.element.y < 500) player.element.y += 1;
       player.speed = player.speed > 0 ? player.speed - 0.2 : 0;
     }
     if (keys.ArrowLeft) {
