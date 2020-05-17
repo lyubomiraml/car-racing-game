@@ -32,7 +32,8 @@ function startGame() {
   gamePlay = true;
   animationGame = requestAnimationFrame(playGame);
   player = {
-    speed: 1,
+    element: div,
+    speed: 3,
     lives: 3,
     gameScore: 0,
     carsToPass: 10,
@@ -52,12 +53,20 @@ function startBoard() {
   }
 }
 
-function pressKeyOn() {}
+function pressKeyOn(event) {
+  event.preventDefault();
+  console.log(keys);
+  keys[event.key] = true;
+}
 
-function pressKeyOff() {}
+function pressKeyOff(event) {
+  event.preventDefault();
+  console.log(keys);
+  keys[event.key] = false;
+}
 
 function updateDash() {
-  console.log(player);
+  //console.log(player);
   scoreDash.innerHTML = player.score;
   lifeDash.innerHTML = player.lives;
   speedDash.innerHTML = player.speed;
@@ -66,6 +75,26 @@ function updateDash() {
 function playGame() {
   if (gamePlay) {
     updateDash();
+
+    //movement
+    if (keys.ArrowUp) {
+      player.element.y -= 1;
+      player.speed = player.speed < 20 ? player.speed + 0.05 : 20;
+    }
+    if (keys.ArrowDown) {
+      player.element.y += 1;
+      player.speed = player.speed > 0 ? player.speed - 0.2 : 0;
+    }
+    if (keys.ArrowLeft) {
+      player.element.x -= player.speed / 4;
+    }
+    if (keys.ArrowRight) {
+      player.element.x += player.speed / 4;
+    }
+
+    //move car
+    player.element.style.top = player.element.y + "px";
+    player.element.style.left = player.element.x + "px";
   }
   animationGame = requestAnimationFrame(playGame);
 }
