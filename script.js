@@ -174,12 +174,20 @@ function moveOtherCars() {
         }
         createOtherCar(tempOtherCars[i]);
       }
-      console.log(hitCar);
     }
   }
 }
 
 function playGame() {
+  if (player.gameEndCounter > 0) {
+    player.gameEndCounter--;
+    player.y = player.y > 60 ? player.y - 30 : 60;
+    if (player.gameEndCounter == 0) {
+      gamePlay = false;
+      btnStart.style.display = "block";
+    }
+  }
+
   if (gamePlay) {
     updateDash();
 
@@ -208,7 +216,6 @@ function playGame() {
     ) {
       if (player.element.y < 500) player.element.y += 1;
       player.speed = player.speed > 0 ? player.speed - 0.2 : 1;
-      console.log("OFF road");
     }
 
     //move car
