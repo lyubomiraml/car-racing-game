@@ -38,6 +38,7 @@ function startGame() {
     carsToPass: 10,
     score: 0,
     roadWidth: 250,
+    gameEndCounter: 0,
   };
   startBoard();
   setupOtherCars(10);
@@ -143,6 +144,18 @@ function moveRoad() {
   return { width: previousWidth, left: previousOffsetLeft };
 }
 
+function isCollide(a, b) {
+  let aRect = a.getBoundingClientRect();
+  let bRect = b.getBoundingClientRect();
+
+  return !(
+    aRect.bottom < bRect.top ||
+    aRect.top > bRect.bottom ||
+    aRect.right < bRect.left ||
+    aRect.left > bRect.right
+  );
+}
+
 function moveOtherCars() {
   let tempOtherCars = document.querySelectorAll(".other-car");
   for (let i = 0; i < tempOtherCars.length; i++) {
@@ -152,6 +165,16 @@ function moveOtherCars() {
       createOtherCar(tempOtherCars[i]);
     } else {
       tempOtherCars[i].style.top = y + "px";
+      let hitCar = isCollide(tempOtherCars[i], player.element);
+      if (hitCar) {
+        player.speed = 0;
+        player.lives--;
+        if (player.lives < 1) {
+          player.gameEndCounter = 1;
+        }
+        createOtherCar(tempOtherCars[i]);
+      }
+      console.log(hitCar);
     }
   }
 }
