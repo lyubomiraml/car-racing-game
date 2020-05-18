@@ -35,7 +35,7 @@ function startGame() {
     speed: 3,
     lives: 3,
     gameScore: 0,
-    carsToPass: 10,
+    carsToPass: 2,
     score: 0,
     roadWidth: 250,
     gameEndCounter: 0,
@@ -161,15 +161,21 @@ function moveOtherCars() {
   for (let i = 0; i < tempOtherCars.length; i++) {
     for (let ii = 0; ii < tempOtherCars.length; ii++) {
       if (i != ii && isCollide(tempOtherCars[i], tempOtherCars[ii])) {
-        tempOtherCars[ii].style.top = tempOtherCars[ii].offsetTop + 50 + "px";
-        tempOtherCars[i].style.top = tempOtherCars[i].offsetTop - 50 + "px";
-        tempOtherCars[ii].style.left = tempOtherCars[ii].offsetLeft - 50 + "px";
-        tempOtherCars[i].style.left = tempOtherCars[i].offsetLeft + 50 + "px";
+        tempOtherCars[ii].style.top = tempOtherCars[ii].offsetTop + 20 + "px";
+        tempOtherCars[i].style.top = tempOtherCars[i].offsetTop - 20 + "px";
+        tempOtherCars[ii].style.left = tempOtherCars[ii].offsetLeft - 20 + "px";
+        tempOtherCars[i].style.left = tempOtherCars[i].offsetLeft + 20 + "px";
       }
     }
     let y = tempOtherCars[i].offsetTop - tempOtherCars[i].speed + player.speed;
     if (y > 2000 || y < -2000) {
       // reset car
+      if (y > 2000) {
+        player.score++;
+        if (player.score >= player.carsToPass) {
+          gameOverPlay();
+        }
+      }
       createOtherCar(tempOtherCars[i]);
     } else {
       tempOtherCars[i].style.top = y + "px";
@@ -184,6 +190,18 @@ function moveOtherCars() {
       }
     }
   }
+}
+
+function gameOverPlay() {
+  let div = document.createElement("div");
+  div.setAttribute("class", "road");
+  div.style.top = "0px";
+  div.style.width = "250px";
+  div.style.backgroundColor = "red";
+  div.innerHTML = "FINISH";
+  div.style.fontSize = "3em";
+  container.appendChild(div);
+  player.gameEndCounter = 12;
 }
 
 function playGame() {
