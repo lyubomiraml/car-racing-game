@@ -159,6 +159,14 @@ function isCollide(a, b) {
 function moveOtherCars() {
   let tempOtherCars = document.querySelectorAll(".other-car");
   for (let i = 0; i < tempOtherCars.length; i++) {
+    for (let ii = 0; ii < tempOtherCars.length; ii++) {
+      if (i != ii && isCollide(tempOtherCars[i], tempOtherCars[ii])) {
+        tempOtherCars[ii].style.top = tempOtherCars[ii].offsetTop + 50 + "px";
+        tempOtherCars[i].style.top = tempOtherCars[i].offsetTop - 50 + "px";
+        tempOtherCars[ii].style.left = tempOtherCars[ii].offsetLeft - 50 + "px";
+        tempOtherCars[i].style.left = tempOtherCars[i].offsetLeft + 50 + "px";
+      }
+    }
     let y = tempOtherCars[i].offsetTop - tempOtherCars[i].speed + player.speed;
     if (y > 2000 || y < -2000) {
       // reset car
